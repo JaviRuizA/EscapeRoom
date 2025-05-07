@@ -1,0 +1,108 @@
+<!-- prueba2.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Prueba 2</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; text-align: center; }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+    }
+    p { font-size: 1.2rem; margin-bottom: 1.5rem; }
+    input {
+      width: 8rem;
+      padding: 0.3rem;
+      font-size: 1rem;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button { margin-top: 1rem; padding: 0.5rem 1rem; font-size: 1rem; }
+
+    .popup {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0,0,0,0.5);
+    }
+    .popup.active { display: flex; }
+    .popup .box {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 6px;
+      text-align: center;
+      max-width: 300px;
+      width: 100%;
+    }
+    .popup .message {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .popup.success .message { color: green; }
+    .popup.error .message   { color: red; }
+    .popup button {
+      padding: 0.4rem 0.8rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Prueba 2</h1>
+  <p>¿Puedo combinar una Gymkana y un Escape room?</p>
+  <input id="resp" placeholder="Sí o No" maxlength="3" />
+  <br>
+  <button id="enviar">Enviar</button>
+
+  <!-- ÉXITO -->
+  <div id="popS" class="popup success">
+    <div class="box">
+      <div class="message">¡Enhorabuena!</div>
+      <div>Has logrado superar la actividad.</div>
+      <button onclick="location.reload()">Volver a empezar</button>
+    </div>
+  </div>
+
+  <!-- ERROR -->
+  <div id="popE" class="popup error">
+    <div class="box">
+      <div class="message">¡Vuelve a intentarlo!</div>
+      <button onclick="closeError()">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    const correcta = 'sí';
+    const inp = document.getElementById('resp');
+    const btn = document.getElementById('enviar');
+    const popS = document.getElementById('popS');
+    const popE = document.getElementById('popE');
+
+    // normalizar minúsculas y sólo letras
+    inp.addEventListener('input', () => {
+      inp.value = inp.value.toLowerCase().replace(/[^a-záéíóúüñ]/g, '');
+    });
+
+    btn.addEventListener('click', () => {
+      if (inp.value === correcta) {
+        popS.classList.add('active');
+      } else {
+        popE.classList.add('active');
+      }
+    });
+
+    function closeError() {
+      popE.classList.remove('active');
+      inp.value = '';
+      inp.focus();
+    }
+  </script>
+</body>
+</html>
